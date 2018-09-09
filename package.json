@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start-dev":"nodemon app.js"
   },
   "author": "sg",
   "license": "ISC",
@@ -12,6 +12,8 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "express-promise-router": "^3.0.3",
-    "morgan": "^1.9.0"
+    "joi": "^13.6.0",
+    "morgan": "^1.9.0",
+    "nodemon": "^1.18.4"
   }
 }
