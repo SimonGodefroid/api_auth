@@ -1,4 +1,17 @@
+const JWT = require('jsonwebtoken');
 const User = require('../models/User');
+const { JWT_SECRET } = require('../configuration');
+signToken = user => {
+	return JWT.sign(
+		{
+			iss: `simongodefroid`,
+			sub: user.id, // subject
+			iat: new Date().getTime(), // issued at [current time]
+			exp: new Date().setDate(new Date().getDate() + 1), // expires at [current time + 1 day]
+		},
+		`simongodefroidauthentication`
+	);
+};
 
 module.exports = {
 	signUp: async (req, res, next) => {
@@ -13,8 +26,11 @@ module.exports = {
 		const newUser = new User({ email, password });
 		await newUser.save();
 
+		// Generate the token
+		const token = signToken(newUser);
+
 		// Respond with token
-		res.json({ user: 'created', success: true });
+		res.status(200).json({ token });
 	},
 	signIn: async (req, res, next) => {},
 	secret: async (req, res, next) => {},
