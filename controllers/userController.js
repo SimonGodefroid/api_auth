@@ -1,7 +1,7 @@
 const JWT = require('jsonwebtoken');
 const User = require('../models/User');
 const { JWT_SECRET } = require('../configuration');
-signToken = user => {
+signToken = (user) => {
 	return JWT.sign(
 		{
 			iss: `simongodefroid`,
@@ -33,5 +33,8 @@ module.exports = {
 		res.status(200).json({ token });
 	},
 	signIn: async (req, res, next) => {},
-	secret: async (req, res, next) => {},
+	secret: async (req, res, next) => {
+		console.log('I managed to get here !');
+		res.json({ secret: 'Resource' });
+	},
 };
