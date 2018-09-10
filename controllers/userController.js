@@ -9,7 +9,7 @@ signToken = (user) => {
 			iat: new Date().getTime(), // issued at [current time]
 			exp: new Date().setDate(new Date().getDate() + 1), // expires at [current time + 1 day]
 		},
-		`simongodefroidauthentication`
+		JWT_SECRET
 	);
 };
 
@@ -32,7 +32,11 @@ module.exports = {
 		// Respond with token
 		res.status(200).json({ token });
 	},
-	signIn: async (req, res, next) => {},
+	signIn: async (req, res, next) => {
+		const token = signToken(req.user);
+		res.status(200).json({token});
+		console.log('successful login');
+	},
 	secret: async (req, res, next) => {
 		console.log('I managed to get here !');
 		res.json({ secret: 'Resource' });

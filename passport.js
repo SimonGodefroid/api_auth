@@ -17,14 +17,14 @@ passport.use(
 			try {
 				// Find the user specified in the token
 				const user = await User.findById(payload.sub);
-        // If user doesn't exist, handle it
+				// If user doesn't exist, handle it
 				if (!user) {
 					return done(null, false);
 				}
-        // Otherwise, return the user
-        // done takes 2 arguments (error,object)
-        // and it exit the function
-        done(null,user);
+				// Otherwise, return the user
+				// done takes 2 arguments (error,object)
+				// and it exit the function
+				done(null, user);
 			} catch (err) {
 				done(error, false);
 			}
@@ -34,19 +34,30 @@ passport.use(
 
 // LOCAL STRATEGY
 
-passport.use(new LocalStrategy({
-	usernameField: 'email',
-},async (email,password,done)=>{
-	// Find the user given the email
-	const user = await User.findOne({email});
-	// If not handle it
- if(!user){
-	 return done(null,false);
- }
-	// Check if the password is correct
-
-	// If not handle it
-
-	// Otherwise, return the user
-
-}));
+passport.use(
+	new LocalStrategy(
+		{
+			usernameField: 'email',
+		},
+		async (email, password, done) => {
+			try {
+				// Find the user given the email
+				const user = await User.findOne({ email });
+				// If not handle it
+				if (!user) {
+					return done(null, false);
+				}
+				// Check if the password is correct
+				const isMatch = await user.isValidPassword(password);
+				// If not handle it
+				if (!isMatch) {
+					return done(null, false);
+				}
+				// Otherwise, return the user
+				done(null, user);
+			} catch (error) {
+				done(error, false);
+			}
+		}
+	)
+);
