@@ -1,0 +1,4 @@
+- [x] Local Passport Strategy
+- [x] Google OAuth token Strategy
+- [x] Facebook OAuth token Strategy
+- [ ] Unit tests
